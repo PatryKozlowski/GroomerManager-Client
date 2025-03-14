@@ -13,3 +13,20 @@ export interface RegisterData {
     name: string;
   };
 }
+
+export interface User {
+  id: string;
+  email: string;
+  role: "Owner" | "Staff";
+  fullName: string;
+}
+
+export interface ApiErrorResponse {
+  title: string;
+}
+
+export interface LoginResponse {
+  token: string;
+  tokenExpired: number;
+  refreshToken: string;
+}

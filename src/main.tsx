@@ -9,6 +9,7 @@ import DashboardLayout from "@/components/layouts/DashboardLayout";
 import AuthLayout from "@/components/layouts/AuthLayout";
 import DashboardPage from "@/pages/DashboardPage";
 import NotFoundPage from "@/pages/NoFoundPage";
+import { Toaster } from "sonner";
 import "./index.css";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -26,6 +27,7 @@ createRoot(document.getElementById("root")!).render(
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
+      <Toaster />
     </Provider>
   </StrictMode>
 );

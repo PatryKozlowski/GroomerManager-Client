@@ -15,13 +15,20 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import PasswordInput from "@/components/inputs/PasswordInput";
+import Spinner from "@/components/loaders/Spinner";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginFromSchema } from "@/schemas";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { loginThunk } from "@/redux/store/auth/authThunk";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "@/redux/store";
 
 function LoginPage() {
+  const dispatch = useDispatch<AppDispatch>();
+  const { isLoading } = useSelector((state: RootState) => state.auth);
+  const navigate = useNavigate();
   const form = useForm<z.output<typeof LoginFromSchema>>({
     resolver: zodResolver(LoginFromSchema),
     defaultValues: {
@@ -31,8 +38,13 @@ function LoginPage() {
   });
 
   const onSubmit = async (values: z.output<typeof LoginFromSchema>) => {
-    console.log(values);
+    dispatch(loginThunk(values)).then((data) => {
+      if (data.payload) {
+        navigate("/dashboard");
+      }
+    });
   };
+
   return (
     <div className="w-full max-w-4xl mx-auto p-4 sm:p-6">
       <div className="text-center mb-6">
@@ -80,8 +92,11 @@ function LoginPage() {
                 )}
               />
 
-              <Button type="submit" className="w-full">
-                Zaloguj się
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                <span className="flex items-center gap-2">
+                  {isLoading && <Spinner />}
+                  Zaloguj się
+                </span>
               </Button>
               <div className="text-center">
                 <span>
