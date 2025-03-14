@@ -1,7 +1,7 @@
 import { setIsCollapsed } from "@/redux/store/sidebar/sidebarSlice";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -20,16 +20,25 @@ function HamburgerMenu() {
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
-            onClick={() => dispatch(setIsCollapsed(true))}
+            onClick={() => dispatch(setIsCollapsed(!isCollapsed))}
             size="icon"
-            className={cn("bg-primary lg:hidden", isCollapsed && "hidden")}
+            className={cn("bg-primary lg:hidden")}
           >
-            <Menu className="h-[1.2rem] w-[1.2rem]" />
-            <span className="sr-only">Otwórz menu</span>
+            {isCollapsed ? (
+              <>
+                <X className="h-[1.2rem] w-[1.2rem]" />
+                <span className="sr-only">Zwiń menu</span>
+              </>
+            ) : (
+              <>
+                <Menu className="h-[1.2rem] w-[1.2rem]" />
+                <span className="sr-only">Otwórz menu</span>
+              </>
+            )}
           </Button>
         </TooltipTrigger>
         <TooltipContent>
-          <p>Otwórz menu</p>
+          {isCollapsed ? "Zwiń menu" : "Otwórz menu"}
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
