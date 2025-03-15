@@ -1,17 +1,19 @@
-import { StrictMode } from "react";
+import { lazy, StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { store } from "@/redux/store/index.ts";
 import { Provider } from "react-redux";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router";
-import RegisterPage from "@/pages/RegisterPage";
-import LoginPage from "@/pages/LoginPage";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import AuthLayout from "@/components/layouts/AuthLayout";
-import DashboardPage from "@/pages/DashboardPage";
-import ClientsPage from "@/pages/ClientsPage";
-import NotFoundPage from "@/pages/NoFoundPage";
 import { Toaster } from "sonner";
 import "./index.css";
+
+const DashboardPage = lazy(() => import("@/pages/DashboardPage"));
+const ClientsPage = lazy(() => import("@/pages/ClientsPage"));
+const LoginPage = lazy(() => import("@/pages/LoginPage"));
+const RegisterPage = lazy(() => import("@/pages/RegisterPage"));
+const NotFoundPage = lazy(() => import("@/pages/NoFoundPage"));
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
