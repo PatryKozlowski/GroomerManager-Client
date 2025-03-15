@@ -14,6 +14,12 @@ export interface RegisterData {
   };
 }
 
+export interface Salon {
+  id: string;
+  logoPath: string;
+  name: string;
+}
+
 export interface User {
   id: string;
   email: string;

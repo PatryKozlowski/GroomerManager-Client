@@ -8,6 +8,7 @@ import LoginPage from "@/pages/LoginPage";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import AuthLayout from "@/components/layouts/AuthLayout";
 import DashboardPage from "@/pages/DashboardPage";
+import ClientsPage from "@/pages/ClientsPage";
 import NotFoundPage from "@/pages/NoFoundPage";
 import { Toaster } from "sonner";
 import "./index.css";
@@ -19,6 +20,7 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route element={<DashboardLayout />}>
             <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/dashboard/clients" element={<ClientsPage />} />
           </Route>
           <Route element={<AuthLayout />}>
             <Route path="/login" element={<LoginPage />} />

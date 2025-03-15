@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { loginThunk, logoutThunk } from "./authThunk";
 
-const LOCAL_STORAGE_KEY = "auth.groomer-manager";
+export const LOCAL_STORAGE_AUTH_KEY = "auth.groomer-manager";
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -9,7 +9,7 @@ interface AuthState {
 }
 
 const getInitialAuthState = (): boolean => {
-  const storedAuth = localStorage.getItem(LOCAL_STORAGE_KEY);
+  const storedAuth = localStorage.getItem(LOCAL_STORAGE_AUTH_KEY);
   return storedAuth === "true";
 };
 
@@ -21,14 +21,19 @@ const initialState: AuthState = {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    clearAuthStore: (state) => {
+      state.isAuthenticated = false;
+      localStorage.removeItem(LOCAL_STORAGE_AUTH_KEY);
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(loginThunk.pending, (state) => {
       state.isLoading = true;
     });
     builder.addCase(loginThunk.fulfilled, (state) => {
       state.isAuthenticated = true;
-      localStorage.setItem(LOCAL_STORAGE_KEY, "true");
+      localStorage.setItem(LOCAL_STORAGE_AUTH_KEY, "true");
       state.isLoading = false;
     });
     builder.addCase(loginThunk.rejected, (state) => {
@@ -36,9 +41,10 @@ const authSlice = createSlice({
     });
     builder.addCase(logoutThunk.fulfilled, (state) => {
       state.isAuthenticated = false;
-      localStorage.removeItem(LOCAL_STORAGE_KEY);
+      localStorage.removeItem(LOCAL_STORAGE_AUTH_KEY);
     });
   },
 });
 
+export const { clearAuthStore } = authSlice.actions;
 export default authSlice.reducer;

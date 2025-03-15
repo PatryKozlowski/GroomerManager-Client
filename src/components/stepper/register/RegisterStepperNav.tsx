@@ -36,38 +36,49 @@ function RegisterStepperNav({
   const isFirstStep = registerState.currentStep === 0;
 
   return (
-    <div className="flex justify-between mt-8">
-      <Button
-        type="button"
-        onClick={() => dispatch(prevStep())}
-        disabled={isFirstStep}
-        className={`transition-opacity ${isFirstStep ? "opacity-0" : ""}`}
-      >
-        <ArrowLeft className="h-4 w-4" />
-        Cofnij
-      </Button>
+    <div className="flex flex-col sm:flex-row justify-between gap-3 mt-8">
+      <div className="flex-shrink-0">
+        <Button
+          type="button"
+          onClick={() => dispatch(prevStep())}
+          disabled={isFirstStep}
+          className={`transition-opacity ${
+            isFirstStep ? "opacity-0" : ""
+          } w-full sm:w-auto`}
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Cofnij
+        </Button>
+      </div>
 
       {isFirstStep && (
-        <Button variant="outline" asChild className="w-1/2">
+        <Button
+          variant="outline"
+          asChild
+          className="w-full sm:w-1/2 order-first sm:order-none mb-2 sm:mb-0"
+        >
           <Link to="/login">Masz już konto? Zaloguj się</Link>
         </Button>
       )}
 
-      <Button
-        type={onSubmit ? "submit" : "button"}
-        onClick={handleNext}
-        disabled={isSubmitting || !canProceed}
-      >
-        {isSubmitting && <Spinner />}
+      <div className="flex-shrink-0">
+        <Button
+          type={onSubmit ? "submit" : "button"}
+          onClick={handleNext}
+          disabled={isSubmitting || !canProceed}
+          className="w-full sm:w-auto"
+        >
+          {isSubmitting && <Spinner />}
 
-        {isLastStep ? "Zatwierdź" : "Dalej"}
+          {isLastStep ? "Zatwierdź" : "Dalej"}
 
-        {!isLastStep && !isSubmitting ? (
-          <ArrowRight className="h-4 w-4" />
-        ) : isLastStep && !isSubmitting ? (
-          <Check className="h-4 w-4" />
-        ) : null}
-      </Button>
+          {!isLastStep && !isSubmitting ? (
+            <ArrowRight className="h-4 w-4" />
+          ) : isLastStep && !isSubmitting ? (
+            <Check className="h-4 w-4" />
+          ) : null}
+        </Button>
+      </div>
     </div>
   );
 }

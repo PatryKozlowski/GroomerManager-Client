@@ -46,7 +46,7 @@ function UserMenu() {
               <span className="truncate font-semibold">{user?.fullName}</span>
               <span className="truncate text-xs">{user?.email}</span>
               <span className="truncate text-xs font-semibold text-violet-500">
-                {user?.role}
+                {user?.role === "Owner" ? "Właściciel" : "Pracownik"}
               </span>
             </div>
           </div>

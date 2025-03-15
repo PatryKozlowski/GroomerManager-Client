@@ -22,10 +22,19 @@ export const useSidebarActiveItem = () => {
 export const useSidebarNavigation = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleItemClick = (path: string) => {
     dispatch(setIsCollapsed(false));
-    navigate(path);
+
+    const params = new URLSearchParams(location.search);
+    const salonId = params.get("salonId");
+
+    if (salonId) {
+      navigate(`${path}?salonId=${salonId}`);
+    } else {
+      navigate(path);
+    }
   };
 
   return { handleItemClick };

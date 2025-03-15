@@ -10,13 +10,13 @@ import {
 
 export const ROUTES = {
   "/dashboard": "Dashboard",
-  "/dashboard/clients": "Clients",
-  "/pets": "Pets",
-  "/appointments": "Appointments",
-  "/services": "Services",
-  "/staff": "Staff",
-  "/inventory": "Inventory",
-  "/settings": "Settings",
+  "/dashboard/clients": "Klienci",
+  "/pets": "Zwierzęta",
+  "/appointments": "Wizyty",
+  "/services": "Usługi",
+  "/staff": "Zespół",
+  "/inventory": "Magazyn",
+  "/settings": "Ustawienia",
 } as const;
 
 export const NAV_ITEMS = [

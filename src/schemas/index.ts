@@ -7,7 +7,7 @@ export const LoginFromSchema = z.object({
       message: "Podaj poprawny adres email",
     })
     .min(1, {
-      message: "Adres email jest wymagany",
+      message: "Adres email jest wymagan",
     }),
   password: z
     .string()
@@ -26,14 +26,17 @@ export const RegisterStepperAccountSchema = z
   .object({
     email: z
       .string()
+      .nonempty({
+        message: "Adres email jest wymagany",
+      })
       .email({
         message: "Podaj poprawny adres email",
-      })
-      .min(1, {
-        message: "Adres email jest wymagany",
       }),
     password: z
       .string()
+      .nonempty({
+        message: "Hasło jest wymagane",
+      })
       .min(8, {
         message: "Hasło musi mieć minimum 8 znaków",
       })
@@ -45,6 +48,9 @@ export const RegisterStepperAccountSchema = z
       }),
     repeatPassword: z
       .string()
+      .nonempty({
+        message: "Hasło jest wymagane",
+      })
       .min(8, {
         message: "Hasło musi mieć minimum 8 znaków",
       })

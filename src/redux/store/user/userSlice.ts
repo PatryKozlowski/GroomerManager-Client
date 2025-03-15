@@ -18,20 +18,26 @@ const userSlice = createSlice({
     setUser: (state, action: PayloadAction<User | null>) => {
       state.user = action.payload;
     },
+    clearUserStore: (state) => {
+      state.user = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchUserThunk.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(fetchUserThunk.fulfilled, (state, action) => {
-      state.user = action.payload;
-      state.isLoading = false;
-    });
+    builder.addCase(
+      fetchUserThunk.fulfilled,
+      (state, action: PayloadAction<User>) => {
+        state.user = action.payload;
+        state.isLoading = false;
+      }
+    );
     builder.addCase(fetchUserThunk.rejected, (state) => {
       state.isLoading = false;
     });
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, clearUserStore } = userSlice.actions;
 export default userSlice.reducer;

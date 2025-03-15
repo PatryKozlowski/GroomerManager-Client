@@ -15,8 +15,14 @@ const api = axios.create({
 api.interceptors.response.use(
   (response) => response,
   (error: AxiosError<ApiErrorResponse>) => {
-    if (error) {
+    if (error.code === "ERR_CONNECTION_REFUSED") {
+      toast.error(
+        "Nie udało się połączyć z serwerem. Sprawdź swoje połączenie internetowe lub spróbuj ponownie później."
+      );
+    } else if (error.response) {
       toast.error(getErrorMessage(error.response!.data!.title));
+    } else {
+      toast.error("Wystąpił problem z połączeniem. Spróbuj ponownie.");
     }
     return Promise.reject(error);
   }
