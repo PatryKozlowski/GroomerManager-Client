@@ -3,7 +3,7 @@ import LoginForm from "@/components/LoginForm";
 
 function LoginPage() {
   return (
-    <div className="w-full max-w-4xl mx-auto p-4 sm:p-6 md:flex md:flex-col md:gap-6 md:justify-center md:items-center md:h-full">
+    <div className="w-full max-w-4xl mx-auto p-4 sm:p-6 flex flex-col md:gap-6 md:justify-center items-center md:h-full">
       <AuthLayoutHeader
         title="Zaloguj się do Groomer Manager"
         description="Wypełnij formularz poniżej aby zalogować się do Groomer Manager"

@@ -4,7 +4,7 @@ import RegisterStepperIndicator from "@/components/stepper/register/RegisterStep
 
 function RegisterPage() {
   return (
-    <div className="w-full max-w-4xl mx-auto p-4 sm:p-6 md:flex md:flex-col md:gap-6 md:justify-center md:items-center md:h-full">
+    <div className="w-full max-w-4xl mx-auto p-4 sm:p-6 flex flex-col md:gap-6 md:justify-center items-center md:h-full">
       <AuthLayoutHeader
         title="Stwórz salon w Groomer Manager"
         description="Wypełnij formularz ponizej aby stworzyć konto i salon"
