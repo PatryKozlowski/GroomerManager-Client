@@ -8,8 +8,7 @@ import {
 import { ChevronDown, Plus } from "lucide-react";
 import SalonAvatar from "@/components/salonSelector/SalonAvatar";
 import type { Salon } from "@/types";
-import { useSelector } from "react-redux";
-import type { RootState } from "@/redux/store";
+import { useGetUserQuery } from "@/redux/store/user/userApiSlice";
 
 interface DropdownSalonSelectorProps {
   currentSalon: Salon;
@@ -22,7 +21,7 @@ function DropdownSalonSelector({
   salons,
   onSalonChange,
 }: DropdownSalonSelectorProps) {
-  const { user } = useSelector((state: RootState) => state.user);
+  const { data: user } = useGetUserQuery();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

@@ -21,13 +21,9 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginFromSchema } from "@/schemas";
 import { Link, useNavigate } from "react-router";
-import { loginThunk } from "@/redux/store/auth/authThunk";
-import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "@/redux/store";
+import { useLoginMutation } from "@/redux/store/auth/authApiSlice";
 
 function LoginForm() {
-  const dispatch = useDispatch<AppDispatch>();
-  const { isLoading } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
   const form = useForm<z.output<typeof LoginFromSchema>>({
     resolver: zodResolver(LoginFromSchema),
@@ -37,18 +33,20 @@ function LoginForm() {
     },
   });
 
+  const [login, { isLoading }] = useLoginMutation();
+
   const onSubmit = async (values: z.output<typeof LoginFromSchema>) => {
-    dispatch(loginThunk(values)).then((data) => {
-      if (data.payload) {
-        navigate("/dashboard");
-      }
-    });
+    const data = await login(values).unwrap();
+    if (data.token) {
+      navigate("/dashboard");
+    }
   };
+
   return (
     <Card className="w-[350px] md:w-1/2">
       <CardHeader>
         <CardTitle className="text-center text-2xl">
-          Stwórz swoje konto
+          Zaloguj się do swojego konta
         </CardTitle>
         <CardDescription className="text-center">
           Wprowadz adres email oraz hasło

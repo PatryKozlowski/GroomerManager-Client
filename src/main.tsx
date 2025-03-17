@@ -2,35 +2,49 @@ import { lazy, StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { store } from "@/redux/store/index.ts";
 import { Provider } from "react-redux";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router";
-import DashboardLayout from "@/components/layouts/DashboardLayout";
-import AuthLayout from "@/components/layouts/AuthLayout";
+import { createBrowserRouter, RouterProvider } from "react-router";
 import { Toaster } from "sonner";
 import "./index.css";
 
+const DashboardLayout = lazy(
+  () => import("@/components/layouts/DashboardLayout")
+);
+const AuthLayout = lazy(() => import("@/components/layouts/AuthLayout"));
 const DashboardPage = lazy(() => import("@/pages/DashboardPage"));
 const ClientsPage = lazy(() => import("@/pages/ClientsPage"));
 const LoginPage = lazy(() => import("@/pages/LoginPage"));
 const RegisterPage = lazy(() => import("@/pages/RegisterPage"));
 const NotFoundPage = lazy(() => import("@/pages/NoFoundPage"));
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <DashboardLayout />,
+    children: [
+      { path: "/dashboard", element: <DashboardPage /> },
+      { path: "/dashboard/clients", element: <ClientsPage /> },
+    ],
+  },
+  {
+    path: "/login",
+    element: <AuthLayout />,
+    children: [{ path: "/login", element: <LoginPage /> }],
+  },
+  {
+    path: "/register",
+    element: <AuthLayout />,
+    children: [{ path: "/register", element: <RegisterPage /> }],
+  },
+  {
+    path: "*",
+    element: <NotFoundPage />,
+  },
+]);
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          <Route element={<DashboardLayout />}>
-            <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/dashboard/clients" element={<ClientsPage />} />
-          </Route>
-          <Route element={<AuthLayout />}>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-          </Route>
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </BrowserRouter>
+      <RouterProvider router={router} />
       <Toaster />
     </Provider>
   </StrictMode>

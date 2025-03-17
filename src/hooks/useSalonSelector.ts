@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router";
 import type { AppDispatch, RootState } from "@/redux/store";
 import { setCurrentSalon } from "@/redux/store/salon/salonSlice";
+import { useGetSalonsQuery } from "@/redux/store/salon/salonApiSlice";
+import { useGetUserQuery } from "@/redux/store/user/userApiSlice";
 
 export function useSalonSelector() {
-  const { salons, currentSalon, isLoading } = useSelector(
-    (state: RootState) => state.salon
-  );
-  const { user } = useSelector((state: RootState) => state.user);
+  const { data: salons, isLoading } = useGetSalonsQuery();
+  const { currentSalon } = useSelector((state: RootState) => state.salon);
+  const { data: user } = useGetUserQuery();
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,6 +20,7 @@ export function useSalonSelector() {
 
     if (
       salonId &&
+      salons &&
       salons.length > 0 &&
       (!currentSalon || salonId !== currentSalon.id)
     ) {
@@ -43,7 +45,7 @@ export function useSalonSelector() {
   }, [currentSalon, isLoading, location.pathname, location.search, navigate]);
 
   const changeSalon = (salonId: string) => {
-    const salon = salons.find((salon) => salon.id === salonId);
+    const salon = salons?.find((salon) => salon.id === salonId);
     if (!salon) return;
 
     dispatch(setCurrentSalon(salon));

@@ -3,14 +3,12 @@ import { cn } from "@/lib/utils";
 import type { RootState } from "@/redux/store";
 import { useSelector } from "react-redux";
 import SidebarItem from "@/components/sidebar/SidebarItem";
-import { useSidebarActiveItem, useSidebarNavigation } from "@/hooks/useSidebar";
 import SidebarItemSkeleton from "./SidebarItemSkeleton";
+import { useGetUserQuery } from "@/redux/store/user/userApiSlice";
 
 function Sidebar() {
   const { isCollapsed } = useSelector((state: RootState) => state.sidebar);
-  const { isLoading } = useSelector((state: RootState) => state.user);
-  const activeItem = useSidebarActiveItem();
-  const { handleItemClick } = useSidebarNavigation();
+  const { isLoading } = useGetUserQuery();
 
   return (
     <div className="relative">
@@ -29,8 +27,8 @@ function Sidebar() {
                     key={path}
                     icon={icon}
                     label={label}
-                    active={activeItem === label}
-                    onClick={() => handleItemClick(path)}
+                    to={path}
+                    end={path === "/dashboard"}
                   />
                 ))}
           </nav>

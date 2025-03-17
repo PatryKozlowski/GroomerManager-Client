@@ -26,7 +26,7 @@ function SalonSelector() {
       {showSalonSelectorForOwner && !showSalonSelectorForUser ? (
         <DropdownSalonSelector
           currentSalon={currentSalon}
-          salons={salons}
+          salons={salons || []}
           onSalonChange={changeSalon}
         />
       ) : (

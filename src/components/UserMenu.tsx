@@ -10,13 +10,21 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { BadgeCheck, LogOut, User } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { useDispatch, useSelector } from "react-redux";
-import type { RootState, AppDispatch } from "@/redux/store";
-import { logoutThunk } from "@/redux/store/auth/authThunk";
+import { useLogoutMutation } from "@/redux/store/auth/authApiSlice";
+import { useNavigate } from "react-router";
+import { useGetUserQuery } from "@/redux/store/user/userApiSlice";
 
 function UserMenu() {
-  const dispatch = useDispatch<AppDispatch>();
-  const { user } = useSelector((state: RootState) => state.user);
+  const [logout] = useLogoutMutation();
+  const navigate = useNavigate();
+  const { data: user } = useGetUserQuery();
+  const handleLogout = async () => {
+    const data = await logout().unwrap();
+
+    if (data.message) {
+      navigate("/login");
+    }
+  };
 
   const getUserInitials = () => {
     if (!user?.fullName) return "U";
@@ -61,7 +69,7 @@ function UserMenu() {
         <DropdownMenuSeparator />
         <DropdownMenuItem
           className="hover:cursor-pointer"
-          onClick={() => dispatch(logoutThunk())}
+          onClick={handleLogout}
         >
           <LogOut />
           <span>Wyloguj się</span>
