@@ -2,6 +2,13 @@ const errorMessages: { [key: string]: string } = {
   InvalidPhoneNumberFormat: "Podaj poprawny numer telefonu",
   InvalidEmailOrPassword: "Niepoprawny email lub hasło",
   ClientAlreadyExist: "Klient juz istnieje",
+  NotConfirmedEmail:
+    "Email nie został potwierdzony. Sprawdź swoją skrzynkę email",
+  EmailAlreadyConfirmed: "Email juz zostal potwierdzony",
+  ConfirmTokenDontExist: "Token potwierdzenia nie istnieje",
+  TokenExpired: "Token wygasł",
+  UserDontExist: "Uzytkownik nie istnieje",
+  UserAlreadyExists: "Uzytkownik juz istnieje",
   Unauthorized: "Brak dostępu",
 };
 

@@ -8,22 +8,26 @@ import {
 import type { RootState } from "@/redux/store";
 import { User, Mail, Phone, Building, Check } from "lucide-react";
 import { useSelector } from "react-redux";
-import { useState } from "react";
 import RegisterStepperNav from "@/components/stepper/register/RegisterStepperNav";
-
+import { useCreateAccountMutation } from "@/redux/store/auth/authApiSlice";
+import { useNavigate } from "react-router";
+import { useEffect } from "react";
 function ConfirmationStep() {
   const registerState = useSelector(
     (state: RootState) => state.registerStepper
   );
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const handleSubmit = () => {
-    setIsSubmitting(true);
+  const navigate = useNavigate();
+  const [createAccount, { isLoading, isSuccess }] = useCreateAccountMutation();
 
-    setTimeout(() => {
-      console.log("Form submitted with data:", registerState.data);
-      setIsSubmitting(false);
-    }, 2000);
+  const handleSubmit = () => {
+    createAccount({ data: registerState.data });
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate("/confirm-email");
+    }
+  }, [isSuccess, navigate]);
 
   return (
     <Card className="w-full">
@@ -93,7 +97,7 @@ function ConfirmationStep() {
 
           <RegisterStepperNav
             onSubmit={handleSubmit}
-            isSubmitting={isSubmitting}
+            isSubmitting={isLoading}
           />
         </div>
       </CardContent>

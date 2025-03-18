@@ -14,8 +14,8 @@ const DashboardPage = lazy(() => import("@/pages/DashboardPage"));
 const ClientsPage = lazy(() => import("@/pages/ClientsPage"));
 const LoginPage = lazy(() => import("@/pages/LoginPage"));
 const RegisterPage = lazy(() => import("@/pages/RegisterPage"));
+const ConfirmEmailPage = lazy(() => import("@/pages/ConfirmEmailPage"));
 const NotFoundPage = lazy(() => import("@/pages/NoFoundPage"));
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -34,6 +34,11 @@ const router = createBrowserRouter([
     path: "/register",
     element: <AuthLayout />,
     children: [{ path: "/register", element: <RegisterPage /> }],
+  },
+  {
+    path: "/confirm-email",
+    element: <AuthLayout />,
+    children: [{ path: "/confirm-email", element: <ConfirmEmailPage /> }],
   },
   {
     path: "*",

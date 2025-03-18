@@ -1,4 +1,4 @@
-import type { LoginResponse } from "@/types";
+import type { LoginResponse, RegisterData } from "@/types";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import axiosBaseQuery from "@/api/baseQuery";
 import { clearAuthStore, setAuthenticated } from "@/redux/store/auth/authSlice";
@@ -30,7 +30,39 @@ export const authApiSlice = createApi({
         dispatch(clearAuthStore());
       },
     }),
+    createAccount: builder.mutation<
+      { message: string },
+      { data: RegisterData }
+    >({
+      query: ({ data }) => ({
+        url: "/api/auth/create",
+        method: "POST",
+        data,
+      }),
+    }),
+    confirmEmail: builder.mutation<{ message: string }, { token: string }>({
+      query: ({ token }) => ({
+        url: `/api/auth/verifyemail?token=${token}`,
+        method: "GET",
+      }),
+    }),
+    sendConfirmEmailToken: builder.mutation<
+      { message: string },
+      { email: string }
+    >({
+      query: ({ email }) => ({
+        url: `/api/auth/newverifyemail`,
+        method: "POST",
+        data: { email },
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useLogoutMutation } = authApiSlice;
+export const {
+  useLoginMutation,
+  useLogoutMutation,
+  useConfirmEmailMutation,
+  useSendConfirmEmailTokenMutation,
+  useCreateAccountMutation,
+} = authApiSlice;

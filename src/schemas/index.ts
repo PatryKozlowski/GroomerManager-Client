@@ -93,3 +93,14 @@ export const RegisterStepperSalonSchema = z.object({
       message: "Nazwa salonu jest zbyt długa",
     }),
 });
+
+export const NewConfirmEmailTokenSchema = z.object({
+  email: z
+    .string()
+    .nonempty({
+      message: "Adres email jest wymagany",
+    })
+    .email({
+      message: "Podaj poprawny adres email",
+    }),
+});
