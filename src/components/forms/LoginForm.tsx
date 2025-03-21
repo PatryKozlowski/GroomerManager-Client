@@ -6,13 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormField } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import PasswordInput from "@/components/inputs/PasswordInput";
 import Spinner from "@/components/loaders/Spinner";
@@ -58,25 +52,13 @@ function LoginForm() {
             <FormField
               control={form.control}
               name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <EmailInput field={field} />
-                  <FormMessage />
-                </FormItem>
-              )}
+              render={({ field }) => <EmailInput field={field} />}
             />
 
             <FormField
               control={form.control}
               name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Hasło</FormLabel>
-                  <PasswordInput field={field} />
-                  <FormMessage />
-                </FormItem>
-              )}
+              render={({ field }) => <PasswordInput field={field} />}
             />
 
             <Button type="submit" className="w-full" disabled={isLoading}>

@@ -5,13 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormField } from "@/components/ui/form";
 import RegisterStepperNav from "@/components/stepper/register/RegisterStepperNav";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -62,37 +56,19 @@ function AccountStep() {
             <FormField
               control={form.control}
               name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <EmailInput field={field} />
-                  <FormMessage />
-                </FormItem>
-              )}
+              render={({ field }) => <EmailInput field={field} />}
             />
 
             <FormField
               control={form.control}
               name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Hasło</FormLabel>
-                  <PasswordInput field={field} />
-                  <FormMessage />
-                </FormItem>
-              )}
+              render={({ field }) => <PasswordInput field={field} />}
             />
 
             <FormField
               control={form.control}
               name="repeatPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Powtórz hasło</FormLabel>
-                  <PasswordInput field={field} />
-                  <FormMessage />
-                </FormItem>
-              )}
+              render={({ field }) => <PasswordInput field={field} />}
             />
 
             <RegisterStepperNav

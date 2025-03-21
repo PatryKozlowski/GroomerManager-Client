@@ -5,17 +5,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form, FormField } from "@/components/ui/form";
 import RegisterStepperNav from "../RegisterStepperNav";
-import { Phone, User } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,6 +18,8 @@ import {
   nextStep,
   updateData,
 } from "@/redux/store/registerStepper/registerStepperSlice";
+import NameInput from "@/components/inputs/NameInput";
+import PhoneInput from "@/components/inputs/PhoneInput";
 
 function PersonalStep() {
   const registerState = useSelector(
@@ -66,18 +59,12 @@ function PersonalStep() {
                 control={form.control}
                 name="firstName"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Imię</FormLabel>
-                    <div className="relative">
-                      <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                      <FormControl>
-                        <Input placeholder="Jan" className="pl-10" {...field} />
-                      </FormControl>
-                    </div>
-                    <div className="min-h-4">
-                      <FormMessage />
-                    </div>
-                  </FormItem>
+                  <NameInput
+                    label="Imię"
+                    placeholder="Jan"
+                    field={field}
+                    inlineInputsShowError={!!form.formState.errors.firstName}
+                  />
                 )}
               />
 
@@ -85,22 +72,12 @@ function PersonalStep() {
                 control={form.control}
                 name="lastName"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Nazwisko</FormLabel>
-                    <div className="relative">
-                      <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                      <FormControl>
-                        <Input
-                          placeholder="Kowalski"
-                          className="pl-10"
-                          {...field}
-                        />
-                      </FormControl>
-                    </div>
-                    <div className="min-h-4">
-                      <FormMessage />
-                    </div>
-                  </FormItem>
+                  <NameInput
+                    label="Nazwisko"
+                    placeholder="Kowalski"
+                    field={field}
+                    inlineInputsShowError={!!form.formState.errors.lastName}
+                  />
                 )}
               />
             </div>
@@ -108,23 +85,7 @@ function PersonalStep() {
             <FormField
               control={form.control}
               name="phone"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Numer telefonu</FormLabel>
-                  <div className="relative">
-                    <Phone className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                    <FormControl>
-                      <Input
-                        type="tel"
-                        placeholder="+48 732 332 734"
-                        className="pl-10"
-                        {...field}
-                      />
-                    </FormControl>
-                  </div>
-                  <FormMessage />
-                </FormItem>
-              )}
+              render={({ field }) => <PhoneInput field={field} />}
             />
 
             <RegisterStepperNav

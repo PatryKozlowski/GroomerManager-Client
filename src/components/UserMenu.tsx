@@ -13,6 +13,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useLogoutMutation } from "@/redux/store/auth/authApiSlice";
 import { useNavigate } from "react-router";
 import { useGetUserQuery } from "@/redux/store/user/userApiSlice";
+import { getInitials } from "@/lib/utils";
 
 function UserMenu() {
   const [logout] = useLogoutMutation();
@@ -24,15 +25,6 @@ function UserMenu() {
     if (data.message) {
       navigate("/login");
     }
-  };
-
-  const getUserInitials = () => {
-    if (!user?.fullName) return "U";
-    return user.fullName
-      .split(" ")
-      .map((part) => part.charAt(0))
-      .join("")
-      .toUpperCase();
   };
 
   return (
@@ -47,7 +39,7 @@ function UserMenu() {
           <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
             <Avatar className="h-8 w-8 rounded-lg">
               <AvatarFallback className="rounded-lg">
-                {getUserInitials()}
+                {getInitials(user?.fullName)}
               </AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">

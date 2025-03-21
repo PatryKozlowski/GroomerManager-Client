@@ -1,9 +1,11 @@
 import { getErrorMessage } from "@/lib/getErrorMessage";
-import { clearAuthStore } from "@/redux/store/auth/authSlice";
 import type { ApiErrorResponse } from "@/types";
 import axios, { type AxiosError, type AxiosRequestConfig } from "axios";
 import { toast } from "sonner";
 import { store } from "@/redux/store";
+import { authApiSlice } from "@/redux/store/auth/authApiSlice";
+import { setAccessError } from "@/redux/store/auth/authSlice";
+import { router } from "@/main";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -40,11 +42,7 @@ const processQueue = (error: unknown = null) => {
 };
 
 const handleLogout = () => {
-  store.dispatch(clearAuthStore());
-
-  window.location.href = "/login";
-
-  toast.error("Sesja wygasła. Zaloguj się ponownie.");
+  store.dispatch(authApiSlice.endpoints.logout.initiate());
 };
 
 api.interceptors.response.use(
@@ -60,6 +58,17 @@ api.interceptors.response.use(
       toast.error(
         "Nie udało się połączyć z serwerem. Sprawdź swoje połączenie internetowe lub spróbuj ponownie później."
       );
+      return Promise.reject(error);
+    }
+
+    if (error.response?.data.title === "UserNotFound") {
+      handleLogout();
+      return Promise.reject(error);
+    }
+
+    if (error.response?.data.title === "NoAccessToThisSalon") {
+      store.dispatch(setAccessError());
+      router.navigate("/no-access");
       return Promise.reject(error);
     }
 

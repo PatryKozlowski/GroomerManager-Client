@@ -47,5 +47,3 @@ export const axiosBaseQuery =
       return { error: standardError };
     }
   };
-
-export default axiosBaseQuery;

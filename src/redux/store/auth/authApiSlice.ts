@@ -1,7 +1,10 @@
 import type { LoginResponse, RegisterData } from "@/types";
 import { createApi } from "@reduxjs/toolkit/query/react";
-import axiosBaseQuery from "@/api/baseQuery";
+import { axiosBaseQuery } from "@/api/baseQuery";
 import { clearAuthStore, setAuthenticated } from "@/redux/store/auth/authSlice";
+import { salonApiSlice } from "@/redux/store/salon/salonApiSlice";
+import { userApiSlice } from "@/redux/store/user/userApiSlice";
+import { clientsApiSlice } from "@/redux/store/clients/clientsApiSlice";
 
 export const authApiSlice = createApi({
   reducerPath: "authApi",
@@ -16,7 +19,6 @@ export const authApiSlice = createApi({
         }),
         async onQueryStarted(_, { dispatch, queryFulfilled }) {
           await queryFulfilled;
-
           dispatch(setAuthenticated());
         },
       }
@@ -27,6 +29,11 @@ export const authApiSlice = createApi({
         method: "GET",
       }),
       async onQueryStarted(_, { dispatch }) {
+        dispatch(authApiSlice.util.resetApiState());
+        dispatch(salonApiSlice.util.resetApiState());
+        dispatch(userApiSlice.util.resetApiState());
+        dispatch(clientsApiSlice.util.resetApiState());
+
         dispatch(clearAuthStore());
       },
     }),

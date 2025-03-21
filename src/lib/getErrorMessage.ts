@@ -9,6 +9,8 @@ const errorMessages: { [key: string]: string } = {
   TokenExpired: "Token wygasł",
   UserDontExist: "Uzytkownik nie istnieje",
   UserAlreadyExists: "Uzytkownik juz istnieje",
+  SalonNameAlreadyExists: "Salon o takiej nazwie juz istnieje",
+  ClientNotFound: "Klient nie znaleziony",
   Unauthorized: "Brak dostępu",
 };
 

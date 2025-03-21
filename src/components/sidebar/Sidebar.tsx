@@ -15,7 +15,7 @@ function Sidebar() {
       <aside
         className={cn(
           "fixed z-50 flex flex-col h-full transition-[width] duration-300 ease-in-out shadow-lg bg-background border-r lg:relative lg:z-auto",
-          isCollapsed ? "w-full" : "w-0 lg:w-64"
+          isCollapsed ? "w-full border-0" : "w-0 lg:w-64 border-r"
         )}
       >
         <div className="flex-1 overflow-y-auto lg:p-2">

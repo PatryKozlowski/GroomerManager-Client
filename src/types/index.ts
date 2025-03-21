@@ -1,3 +1,5 @@
+import { CreateEditClientSchema, filterClientSchema } from "@/schemas";
+import { z } from "zod";
 export interface RegisterData {
   account: {
     email: string;
@@ -18,6 +20,7 @@ export interface Salon {
   id: string;
   logoPath: string;
   name: string;
+  isDefault: boolean;
 }
 
 export interface User {
@@ -39,3 +42,36 @@ export interface LoginResponse {
   tokenExpired: number;
   refreshToken: string;
 }
+
+export interface Client {
+  id: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email?: string;
+  salonId: string;
+}
+
+export interface Pet {
+  id: string;
+  name: string;
+  breed: string;
+  birthDate: string;
+  weight: number;
+  clientId: string;
+  salonId: string;
+  notes: PetNote[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface PetNote {
+  id: string;
+  text: string;
+  createdAt: string;
+  updatedAt: string;
+  createdBy: string;
+}
+
+export type ClientFormData = z.output<typeof CreateEditClientSchema>;
+export type FilterFormData = z.infer<typeof filterClientSchema>;

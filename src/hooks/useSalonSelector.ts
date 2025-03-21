@@ -5,6 +5,7 @@ import type { AppDispatch, RootState } from "@/redux/store";
 import { setCurrentSalon } from "@/redux/store/salon/salonSlice";
 import { useGetSalonsQuery } from "@/redux/store/salon/salonApiSlice";
 import { useGetUserQuery } from "@/redux/store/user/userApiSlice";
+import { toast } from "sonner";
 
 export function useSalonSelector() {
   const { data: salons, isLoading } = useGetSalonsQuery();
@@ -36,7 +37,7 @@ export function useSalonSelector() {
       const params = new URLSearchParams(location.search);
       const salonIdParam = params.get("salonId");
 
-      if (!salonIdParam) {
+      if (!salonIdParam && location.pathname !== "/no-access") {
         const currentPath = location.pathname;
         params.set("salonId", currentSalon.id);
         navigate(`${currentPath}?${params.toString()}`, { replace: true });
@@ -50,11 +51,18 @@ export function useSalonSelector() {
 
     dispatch(setCurrentSalon(salon));
 
-    const currentPath = location.pathname;
-    const params = new URLSearchParams(location.search);
-    params.set("salonId", salonId);
+    if (location.pathname === "/no-access") {
+      navigate(`/dashboard?salonId=${salonId}`, { replace: true });
+    } else {
+      const currentPath = location.pathname;
+      const params = new URLSearchParams(location.search);
+      params.set("salonId", salonId);
+      navigate(`${currentPath}?${params.toString()}`, { replace: true });
+    }
 
-    navigate(`${currentPath}?${params.toString()}`, { replace: true });
+    if (location.pathname === "/no-access" || salonId !== currentSalon?.id) {
+      toast.success(`Salon został zmieniony: ${salon.name}`);
+    }
   };
 
   const showSalonSelectorForOwner = user?.role === "Owner";

@@ -4,9 +4,12 @@ import sidebarReducer from "@/redux/store/sidebar/sidebarSlice";
 import registerStepperReducer from "@/redux/store/registerStepper/registerStepperSlice";
 import authReducer from "@/redux/store/auth/authSlice";
 import salonReducer from "@/redux/store/salon/salonSlice";
-import { authApiSlice } from "./auth/authApiSlice";
-import { salonApiSlice } from "./salon/salonApiSlice";
-import { userApiSlice } from "./user/userApiSlice";
+import { authApiSlice } from "@/redux/store/auth/authApiSlice";
+import { salonApiSlice } from "@/redux/store/salon/salonApiSlice";
+import { userApiSlice } from "@/redux/store/user/userApiSlice";
+import { clientsApiSlice } from "@/redux/store/clients/clientsApiSlice";
+import { petsApiSlice } from "./pets/petsApiSlice";
+
 export const store = configureStore({
   reducer: {
     sidebar: sidebarReducer,
@@ -17,12 +20,16 @@ export const store = configureStore({
     [authApiSlice.reducerPath]: authApiSlice.reducer,
     [salonApiSlice.reducerPath]: salonApiSlice.reducer,
     [userApiSlice.reducerPath]: userApiSlice.reducer,
+    [clientsApiSlice.reducerPath]: clientsApiSlice.reducer,
+    [petsApiSlice.reducerPath]: petsApiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       authApiSlice.middleware,
       salonApiSlice.middleware,
-      userApiSlice.middleware
+      userApiSlice.middleware,
+      clientsApiSlice.middleware,
+      petsApiSlice.middleware
     ),
 });
 

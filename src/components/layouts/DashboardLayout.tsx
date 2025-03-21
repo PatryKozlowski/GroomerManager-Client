@@ -21,7 +21,8 @@ function DashboardLayout() {
         <Sidebar />
         <main className="flex-1 flex flex-col overflow-hidden">
           <div className="flex-1 h-full overflow-y-auto">
-            <div className="mx-auto max-w-7xl p-4 space-y-6">
+            {/* <div className="mx-auto max-w-7xl p-4 space-y-6"> */}
+            <div className="mx-auto p-4 space-y-6">
               <Outlet />
             </div>
           </div>

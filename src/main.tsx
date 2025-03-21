@@ -2,7 +2,7 @@ import { lazy, StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { store } from "@/redux/store/index.ts";
 import { Provider } from "react-redux";
-import { createBrowserRouter, RouterProvider } from "react-router";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router";
 import { Toaster } from "sonner";
 import "./index.css";
 
@@ -16,29 +16,40 @@ const LoginPage = lazy(() => import("@/pages/LoginPage"));
 const RegisterPage = lazy(() => import("@/pages/RegisterPage"));
 const ConfirmEmailPage = lazy(() => import("@/pages/ConfirmEmailPage"));
 const NotFoundPage = lazy(() => import("@/pages/NoFoundPage"));
-const router = createBrowserRouter([
+const NoAccessPage = lazy(() => import("@/pages/NoAccessPage"));
+const ClientPage = lazy(() => import("@/pages/ClientPage"));
+export const router = createBrowserRouter([
   {
     path: "/",
+    element: <Navigate to="/dashboard" replace />,
+  },
+  {
+    path: "/dashboard",
     element: <DashboardLayout />,
     children: [
-      { path: "/dashboard", element: <DashboardPage /> },
-      { path: "/dashboard/clients", element: <ClientsPage /> },
+      { path: "", element: <DashboardPage /> },
+      { path: "clients", element: <ClientsPage /> },
+      { path: "clients/:id", element: <ClientPage /> },
     ],
   },
   {
     path: "/login",
     element: <AuthLayout />,
-    children: [{ path: "/login", element: <LoginPage /> }],
+    children: [{ path: "", element: <LoginPage /> }],
   },
   {
     path: "/register",
     element: <AuthLayout />,
-    children: [{ path: "/register", element: <RegisterPage /> }],
+    children: [{ path: "", element: <RegisterPage /> }],
   },
   {
     path: "/confirm-email",
     element: <AuthLayout />,
-    children: [{ path: "/confirm-email", element: <ConfirmEmailPage /> }],
+    children: [{ path: "", element: <ConfirmEmailPage /> }],
+  },
+  {
+    path: "/no-access",
+    element: <NoAccessPage />,
   },
   {
     path: "*",
